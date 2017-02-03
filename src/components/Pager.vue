@@ -1,7 +1,7 @@
 <template>
     <div id="pager" class="pager-container">
         <div class="pager-section">
-            <input id="filterUsers" class="pager-filter" type="text" @keyup="searchItems(pageSize,1)" v-model.trim="filter"/>
+            <input id="filterUsers" class="pager-filter" type="text" @keyup="onSearch(pageSize, 1)" v-model.trim="filter"/>
         </div>
         <div class="pager-section fixed-height">
             <table >
@@ -14,19 +14,19 @@
             </table>
         </div>
         <div class="pager-section">
-            <button id="prev" v-bind:disabled="!hasPrevious" value="Prev" @click="searchItems(pageSize,previousPageNumber)">Prev</button>
+            <button id="prev" v-bind:disabled="!hasPrevious" value="Prev" @click="onSearch(pageSize, previousPageNumber)">Prev</button>
                     <span v-for="n in totalPages">
                         &nbsp;&nbsp;
-                        <span @click="searchItems(pageSize,n)">
+                        <span @click="onSearch(pageSize, n)">
                             <b v-if="n == currentPage" class="highlighted">{{n}}</b>
                             <b v-else>{{n}}</b>
                         </span>
                     </span>
-            <button id="next" v-bind:disabled="!hasNext" value="Next" @click="searchItems(pageSize,nextPageNumber)">Next</button>
+            <button id="next" v-bind:disabled="!hasNext" value="Next" @click="onSearch(pageSize, nextPageNumber)">Next</button>
             <span>
                 &nbsp;&nbsp;
                 <label class="left" for="pageSize">Items Per Page -&nbsp;&nbsp;</label>
-                <select id="pageSize" v-model="pageSize" @change="searchItems(pageSize,1)">
+                <select id="pageSize" v-model="pageSize" @change="onSearch(pageSize,1)">
                     <option>5</option>
                     <option>10</option>
                     <option>25</option>
@@ -37,76 +37,71 @@
 </template>
 
 <script>
-    export default {
-        name: 'pager',
-        props:{
-
-            /**
-             * Name of the item attributes to be displayed in the table.
-             * Each name in the given array must be exactly equal to a valid
-             * attribute of the type returned in the items array.
-             */
-            colNames: {
-                type:Array,
-                default() {
-                    return []
-                }
-            },
-            searchUrl: {
-                type: String,
-                default:''
-            }
-        },
-        data() {
-            return {
-                items:[],
-                totalPages: 0,
-                totalItems: 0,
-                pageSize:10,
-                currentPage: 1,
-                nextPageNumber: 1,
-                hasNext:true,
-                previousPageNumber: 1,
-                hasPrevious: false,
-                filter:""
-            }
-        },
-        methods: {
-            searchItems: function(pageSize, pageNumber) {
-                this.$http.get('http://localhost:8080/user/search/'+pageSize+"/"+pageNumber+"?query="+this.filter,
-                    {headers:{'Cache-Control':'no-cache', 'X-Authorization':'Bearer '+auth.getToken()}})
-                    .then(function successCallback(response) {
-                        this.calculatePage(response, pageNumber);
-                    },function errorCallback(response) {
-
-                    });
-            },
-            calculatePage: function(data, pageNumber) {
-                this.currentPage = pageNumber;
-                this.items = data.body.pagedItems;
-                this.totalItems = data.body.totalItems;
-                this.totalPages = data.body.totalPages;
-
-                if(pageNumber < this.totalPages) {
-                    this.nextPageNumber = pageNumber +1;
-                    this.hasNext = true;
-                } else {
-                    this.hasNext = false;
-                }
-
-                if(pageNumber > 1) {
-                    this.previousPageNumber = pageNumber -1;
-                    this.hasPrevious = true;
-                } else {
-                    this.hasPrevious = false;
-                }
-            }
-        },
-        mounted: function() {
-            this.searchItems(this.pageSize,this.currentPage);
-        }
+export default {
+  name: 'pager',
+  props: {
+    /**
+     * Name of the item attributes to be displayed in the table.
+     * Each name in the given array must be exactly equal to a valid
+     * attribute of the type returned in the items array.
+     */
+    colNames: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    items: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    onSearch: {
+      type: Function,
+      default (pageSize, pageNumber) {
+      }
     }
+  },
+  data () {
+    return {
+      totalPages: 0,
+      totalItems: 0,
+      pageSize: 10,
+      currentPage: 1,
+      nextPageNumber: 1,
+      hasNext: true,
+      previousPageNumber: 1,
+      hasPrevious: false,
+      filter: ''
+    }
+  },
+  methods: {
+    calculatePage: function (data, pageNumber) {
+      this.currentPage = pageNumber
+      this.items = data.body.pagedItems
+      this.totalItems = data.body.totalItems
+      this.totalPages = data.body.totalPages
 
+      if (pageNumber < this.totalPages) {
+        this.nextPageNumber = pageNumber + 1
+        this.hasNext = true
+      } else {
+        this.hasNext = false
+      }
+
+      if (pageNumber > 1) {
+        this.previousPageNumber = pageNumber - 1
+        this.hasPrevious = true
+      } else {
+        this.hasPrevious = false
+      }
+    }
+  },
+  mounted: function () {
+    this.onSearch(this.pageSize, this.currentPage)
+  }
+}
 </script>
 
 <style>
