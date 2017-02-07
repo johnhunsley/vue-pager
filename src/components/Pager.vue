@@ -1,7 +1,7 @@
 <template>
     <div id="pager" class="pager-container">
         <div class="pager-section">
-            <input id="filterItems" class="pager-filter" type="text" @keyup="search(pageSize, 1)" v-model.trim="filter"/>
+            <input id="filterItems" class="pager-filter" type="text" @keyup="search(pageSize, 1)" :placeholder="filterPlaceholder" v-model.trim="filter"/>
         </div>
         <div class="pager-section fixed-height">
             <span v-if="items.length < 1">{{noItemsLabel}}</span>
@@ -89,6 +89,14 @@ export default {
     noItemsLabel: {
       type: String,
       default: 'No Results'
+    },
+
+    /**
+     *
+     */
+    filterPlaceholder: {
+      type: String,
+      default: 'Filter Results'
     }
   },
 
