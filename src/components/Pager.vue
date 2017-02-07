@@ -1,32 +1,32 @@
 <template>
     <div id="pager" class="pager-container">
         <div class="pager-section">
-            <input id="filterUsers" class="pager-filter" type="text" @keyup="onSearch(pageSize, 1)" v-model.trim="filter"/>
+            <input id="filterUsers" class="pager-filter" type="text" @keyup="search(pageSize, 1)" v-model.trim="filter"/>
         </div>
         <div class="pager-section fixed-height">
             <table >
-                <tr v-for="colName in colNames">
-                    <th>{{colName}}</th>
-                </tr>
+                <th v-for="colName in colNames">
+                    {{colName}}
+                </th>
                 <tr v-for="item in items">
                     <td v-for="colName in colNames">{{item[colName]}}</td>
                 </tr>
             </table>
         </div>
         <div class="pager-section">
-            <button id="prev" v-bind:disabled="!hasPrevious" value="Prev" @click="onSearch(pageSize, previousPageNumber)">Prev</button>
+            <button id="prev" v-bind:disabled="!hasPrevious" value="Prev" @click="search(pageSize, previousPageNumber)">Prev</button>
                     <span v-for="n in totalPages">
                         &nbsp;&nbsp;
-                        <span @click="onSearch(pageSize, n)">
+                        <span @click="search(pageSize, n)">
                             <b v-if="n == currentPage" class="highlighted">{{n}}</b>
                             <b v-else>{{n}}</b>
                         </span>
                     </span>
-            <button id="next" v-bind:disabled="!hasNext" value="Next" @click="onSearch(pageSize, nextPageNumber)">Next</button>
+            <button id="next" v-bind:disabled="!hasNext" value="Next" @click="search(pageSize, nextPageNumber)">Next</button>
             <span>
                 &nbsp;&nbsp;
                 <label class="left" for="pageSize">Items Per Page -&nbsp;&nbsp;</label>
-                <select id="pageSize" v-model="pageSize" @change="onSearch(pageSize,1)">
+                <select id="pageSize" v-model="pageSize" @change="search(pageSize,1)">
                     <option>5</option>
                     <option>10</option>
                     <option>25</option>
@@ -51,12 +51,20 @@ export default {
         return []
       }
     },
-    items: {
-      type: Array,
-      default () {
-        return []
-      }
+    /**
+     * The response object from the server which must contain the following
+     * - pagedItems : An Array of objects with attributes referenced in colNames
+     * - totalItems : The total number of items to be paged
+     * - totalPages : The total number of pages as defined by the total items and page size
+     */
+    response: {
+      type: Object,
+      default: null
     },
+    /**
+     * A function which should call the remote service which must return paged data
+     * and set the the response object
+     */
     onSearch: {
       type: Function,
       default (pageSize, pageNumber) {
@@ -65,6 +73,7 @@ export default {
   },
   data () {
     return {
+      items: [],
       totalPages: 0,
       totalItems: 0,
       pageSize: 10,
@@ -77,21 +86,34 @@ export default {
     }
   },
   methods: {
-    calculatePage: function (data, pageNumber) {
+
+    /**
+     * Set the current page and call the overridden onSearch method to
+     * perform the function of getting items from the server
+     */
+    search: function (pageSize, pageNumber) {
       this.currentPage = pageNumber
+      this.onSearch(pageSize, pageNumber, this.filter)
+    },
+
+    /**
+     * Calculate the values to be displayed on the page from the
+     * watched response object
+     */
+    calculatePage: function (data) {
       this.items = data.body.pagedItems
       this.totalItems = data.body.totalItems
       this.totalPages = data.body.totalPages
 
-      if (pageNumber < this.totalPages) {
-        this.nextPageNumber = pageNumber + 1
+      if (this.currentPage < this.totalPages) {
+        this.nextPageNumber = this.currentPage + 1
         this.hasNext = true
       } else {
         this.hasNext = false
       }
 
-      if (pageNumber > 1) {
-        this.previousPageNumber = pageNumber - 1
+      if (this.currentPage > 1) {
+        this.previousPageNumber = this.currentPage - 1
         this.hasPrevious = true
       } else {
         this.hasPrevious = false
@@ -99,7 +121,16 @@ export default {
     }
   },
   mounted: function () {
-    this.onSearch(this.pageSize, this.currentPage)
+    this.onSearch(this.pageSize, this.currentPage, this.filter)
+  },
+  watch: {
+     /**
+     * When the response property in the parent changes then
+     * recalculate the page
+     */
+    response: function (val) {
+      this.calculatePage(val)
+    }
   }
 }
 </script>
