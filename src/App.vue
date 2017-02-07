@@ -15,15 +15,21 @@ export default {
   data () {
     return {
       response: null,
-      colNames: ['username', 'firstName', 'lastName', 'email', 'enabled']
+      colNames: [
+        {'label': 'User Name', 'value': 'username'},
+        {'label': 'First Name', 'value': 'firstName'},
+        {'label': 'Last Name', 'value': 'lastName'},
+        {'label': 'Email', 'value': 'email'},
+        {'label': 'Enabled?', 'value': 'enabled'}]
     }
   },
   methods: {
     getItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
       this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDYxMzYyLCJleHAiOjE0ODY0NjIyNjJ9.vKCD-myboywgH2cMYQcOjiwYtgrtkYQ63Jc5wm-1QiRST2TIKS7OQEBYeme4BjlVpZ-7QKLdUf1ZJOOoe7EeJA'}})
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDY1NDUzLCJleHAiOjE0ODY0NjYzNTN9.ukFuSYohE56SE-mPsw0v2f_-NZIm8xsD-ew5hugNQSQMjIa1pyh5CCkL8DczZ5LJH6tS03S2f0XWW3foIuDdoQ'}})
         .then(function successCallback (response) {
+          console.log(response)
           this.response = response
         }, function errorCallback (response) {
           console.log('Token expired, forcing client to re-authenitcate')

@@ -6,10 +6,10 @@
         <div class="pager-section fixed-height">
             <table >
                 <th v-for="colName in colNames">
-                    {{colName}}
+                    {{colName.label}}
                 </th>
                 <tr v-for="item in items">
-                    <td v-for="colName in colNames">{{item[colName]}}</td>
+                    <td v-for="colName in colNames">{{item[colName.value]}}</td>
                 </tr>
             </table>
         </div>
@@ -41,9 +41,10 @@ export default {
   name: 'pager',
   props: {
     /**
-     * Name of the item attributes to be displayed in the table.
-     * Each name in the given array must be exactly equal to a valid
-     * attribute of the type returned in the items array.
+     * Label mapped values to item attributes. Expects an array of mapping objects
+     * which define a label and value attributes where the value is the exact name
+     * of the attribute in item object to be displayed under the labelled column
+     * header name.
      */
     colNames: {
       type: Array,
