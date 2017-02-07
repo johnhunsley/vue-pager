@@ -1,6 +1,6 @@
 <template>
   <div class="myPager">
-    <pager :on-search='getItems' :col-names='colNames' :response='response' />
+    <pager :on-search='getItems' :col-names='colNames' :response='response' :no-items-label='noUsers'/>
   </div>
 </template>
 
@@ -20,14 +20,16 @@ export default {
         {'label': 'First Name', 'value': 'firstName'},
         {'label': 'Last Name', 'value': 'lastName'},
         {'label': 'Email', 'value': 'email'},
-        {'label': 'Enabled?', 'value': 'enabled'}]
+        {'label': 'Enabled?', 'value': 'enabled'}
+      ],
+      noUsers: 'No Users'
     }
   },
   methods: {
     getItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
       this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDY2MzYzLCJleHAiOjE0ODY0NjcyNjN9.dCrQJHluwKSZ_41_w5_NJmZ9KmdBIwc_8IuvL5U-sHVXyWRszZbggi7GG6YzThICTbrApZAd4D9_gtcYpx2HSw'}})
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBUFBfVVNFUiIsIkFETUlOIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDY3MzM1LCJleHAiOjE0ODY0NjgyMzV9.nc9lMsVk0XbVuzdGyDf4SpwkWsogz94PBlkHK9DOZFeNweL3vSDyPMJCS5QUqVVfckO71uYuxEQiryE-XC-iZg'}})
         .then(function successCallback (response) {
           console.log(response)
           this.response = response

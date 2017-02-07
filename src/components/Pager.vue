@@ -1,10 +1,11 @@
 <template>
     <div id="pager" class="pager-container">
         <div class="pager-section">
-            <input id="filterUsers" class="pager-filter" type="text" @keyup="search(pageSize, 1)" v-model.trim="filter"/>
+            <input id="filterItems" class="pager-filter" type="text" @keyup="search(pageSize, 1)" v-model.trim="filter"/>
         </div>
         <div class="pager-section fixed-height">
-            <table >
+            <span v-if="items.length < 1">{{noItemsLabel}}</span>
+            <table v-else>
                 <th v-for="colName in colNames">
                     {{colName.label}}
                 </th>
@@ -26,7 +27,7 @@
             <span>
                 &nbsp;&nbsp;
                 <label class="left" for="pageSize">Items Per Page -&nbsp;&nbsp;</label>
-                <select id="pageSize" v-model="pageSize" @change="search(pageSize,1)">
+                <select id="pageSize" v-model="pageSize" @change="search(pageSize, 1)">
                     <option v-for="option in pageSizeOptions">{{option}}</option>
                 </select>
             </span>
@@ -73,13 +74,18 @@ export default {
     },
 
     /**
-     *
+     * Page size options
      */
     pageSizeOptions: {
       type: Array,
       default () {
         return ['5', '10', '20', '50', '100']
       }
+    },
+
+    noItemsLabel: {
+      type: String,
+      default: 'No Items'
     }
   },
 
