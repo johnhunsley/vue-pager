@@ -9,7 +9,7 @@
                 <th v-for="colName in colNames">
                     {{colName.label}}
                 </th>
-                <tr v-for="item in items">
+                <tr v-for="item in items" @click="onSelect()">
                     <td v-for="colName in colNames">{{item[colName.value]}}</td>
                 </tr>
             </table>
@@ -70,6 +70,16 @@ export default {
     onSearch: {
       type: Function,
       default (pageSize, pageNumber) {
+      }
+    },
+
+    /**
+     * A placeholder for a function which does something when an item in the tabulated
+     * results is clicked
+     */
+    onSelect: {
+      type: Function,
+      default (id) {
       }
     },
 
