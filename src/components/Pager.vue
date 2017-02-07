@@ -9,7 +9,7 @@
                 <th v-for="colName in colNames">
                     {{colName.label}}
                 </th>
-                <tr v-for="item in items" @click="onSelect()">
+                <tr v-for="item in items" @click="onSelect(item[selectId])">
                     <td v-for="colName in colNames">{{item[colName.value]}}</td>
                 </tr>
             </table>
@@ -102,11 +102,21 @@ export default {
     },
 
     /**
-     *
+     * Place holder for the filter input box
      */
     filterPlaceholder: {
       type: String,
       default: 'Filter Results'
+    },
+
+    /**
+     * The label of the item attribute used to identify each row
+     * in the tabulated results and passed into the default onSelect
+     * function executed when a row item is selected
+     */
+    selectId: {
+      type: String,
+      default: ''
     }
   },
 
