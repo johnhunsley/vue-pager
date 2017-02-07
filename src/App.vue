@@ -29,7 +29,7 @@ export default {
     getItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
       this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBUFBfVVNFUiIsIkFETUlOIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDY3MzM1LCJleHAiOjE0ODY0NjgyMzV9.nc9lMsVk0XbVuzdGyDf4SpwkWsogz94PBlkHK9DOZFeNweL3vSDyPMJCS5QUqVVfckO71uYuxEQiryE-XC-iZg'}})
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBUFBfVVNFUiIsIkFETUlOIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDY4MjYxLCJleHAiOjE0ODY0NjkxNjF9.OYXoFYl5doBoCsvl1SUHR2XWMKd9QMo3w_Pa7GfiYsHd9CPoH2Y5hIVEJRyKE8ThnIDDfY0J_ryqgcLZeCstXw'}})
         .then(function successCallback (response) {
           console.log(response)
           this.response = response

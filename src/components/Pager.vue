@@ -83,9 +83,12 @@ export default {
       }
     },
 
+    /**
+     * A label to display when no items are found
+     */
     noItemsLabel: {
       type: String,
-      default: 'No Items'
+      default: 'No Results'
     }
   },
 
