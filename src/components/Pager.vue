@@ -27,10 +27,7 @@
                 &nbsp;&nbsp;
                 <label class="left" for="pageSize">Items Per Page -&nbsp;&nbsp;</label>
                 <select id="pageSize" v-model="pageSize" @change="search(pageSize,1)">
-                    <option>5</option>
-                    <option>10</option>
-                    <option>25</option>
-                    <option>50</option>
+                    <option v-for="option in pageSizeOptions">{{option}}</option>
                 </select>
             </span>
         </div>
@@ -40,6 +37,7 @@
 export default {
   name: 'pager',
   props: {
+
     /**
      * Label mapped values to item attributes. Expects an array of mapping objects
      * which define a label and value attributes where the value is the exact name
@@ -52,6 +50,7 @@ export default {
         return []
       }
     },
+
     /**
      * The response object from the server which must contain the following
      * - pagedItems : An Array of objects with attributes referenced in colNames
@@ -62,6 +61,7 @@ export default {
       type: Object,
       default: null
     },
+
     /**
      * A function which should call the remote service which must return paged data
      * and set the the response object
@@ -70,8 +70,19 @@ export default {
       type: Function,
       default (pageSize, pageNumber) {
       }
+    },
+
+    /**
+     *
+     */
+    pageSizeOptions: {
+      type: Array,
+      default () {
+        return ['5', '10', '20', '50', '100']
+      }
     }
   },
+
   data () {
     return {
       items: [],
@@ -86,6 +97,7 @@ export default {
       filter: ''
     }
   },
+
   methods: {
 
     /**
@@ -121,10 +133,13 @@ export default {
       }
     }
   },
+
   mounted: function () {
     this.onSearch(this.pageSize, this.currentPage, this.filter)
   },
+
   watch: {
+
      /**
      * When the response property in the parent changes then
      * recalculate the page
@@ -159,14 +174,14 @@ export default {
         margin-bottom: 20px;
         padding: 20px;
         background-color: rgba(170, 204, 170, 0.33);
-        /*box-shadow: 0 0 10px #86a186;*/
+        box-shadow: 0 0 10px #86a186;
     }
 
         .fixed-height {
         min-height: 420px;
     }
 
-        .filter {
+        .pager-filter {
         min-width: 100%;
     }
 
@@ -178,10 +193,6 @@ export default {
         border-collapse:collapse;
         border-spacing:0;
         border-color:#aaa;
-    }
-
-        tr {
-
     }
 
         tr:nth-child(even) {
@@ -222,6 +233,9 @@ export default {
         border-color:#aaa;
         color:#fff;
         background-color:#aca;
+    }
+        .highlighted {
+        color:#00b300;
     }
 
 </style>

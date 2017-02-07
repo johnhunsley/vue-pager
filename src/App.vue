@@ -1,6 +1,6 @@
 <template>
   <div class="myPager">
-    <pager :on-search='getItems' :col-names='colNames' :response='response'/>
+    <pager :on-search='getItems' :col-names='colNames' :response='response' />
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     getItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
       this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDY1NDUzLCJleHAiOjE0ODY0NjYzNTN9.ukFuSYohE56SE-mPsw0v2f_-NZIm8xsD-ew5hugNQSQMjIa1pyh5CCkL8DczZ5LJH6tS03S2f0XWW3foIuDdoQ'}})
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2NDY2MzYzLCJleHAiOjE0ODY0NjcyNjN9.dCrQJHluwKSZ_41_w5_NJmZ9KmdBIwc_8IuvL5U-sHVXyWRszZbggi7GG6YzThICTbrApZAd4D9_gtcYpx2HSw'}})
         .then(function successCallback (response) {
           console.log(response)
           this.response = response
