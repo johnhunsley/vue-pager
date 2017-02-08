@@ -31,6 +31,7 @@
                     <option v-for="option in pageSizeOptions">{{option}}</option>
                 </select>
             </span>
+          <slot name="additionalButtons"></slot>
         </div>
 </template>
 
