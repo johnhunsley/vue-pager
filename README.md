@@ -155,5 +155,6 @@ export default {
   }
 }
 ```
+## Screenshot
 ![](./vue-pager.png "Paging Users")
 
