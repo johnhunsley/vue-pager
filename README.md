@@ -3,6 +3,9 @@
 
 > A Server Side Paging Vue Component with results filtering and adjustable page size and
 
+## Screenshot
+![](./vue-pager.png "Paging Users")
+
 ## Build Setup
 
 ``` bash
@@ -156,6 +159,4 @@ export default {
   }
 }
 ```
-## Screenshot
-![](./vue-pager.png "Paging Users")
 
