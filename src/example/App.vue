@@ -31,7 +31,7 @@ export default {
     getRemoteItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
       this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBUFBfVVNFUiIsIkFETUlOIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg2OTk3NTYyLCJleHAiOjE0ODY5OTg0NjJ9.SSRQtBeX9TDxyI7i2TuM22LppPKaeBOKNY8UQnNejasBdEU9mYUJlS6Un8aIWu1UtXwEnjq5AzvNz7wM9Rog7g'}})
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer '}})
         .then(function successCallback (response) {
           console.log(response)
           this.response = response
