@@ -1,7 +1,7 @@
 [![Circle CI](https://circleci.com/gh/johnhunsley/vue-pager.svg?style=svg)](https://circleci.com/gh/johnhunsley/vue-pager)
 # vue-pager
 
-> A Server Side Paging Vue Component with results filtering and adjustable page size and
+> A server side paging Vue component with results filtering and adjustable page size
 
 ## Screenshot
 ![](./vue-pager.png "Paging Users")
