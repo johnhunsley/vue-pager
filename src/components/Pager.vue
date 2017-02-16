@@ -58,7 +58,7 @@ export default {
      */
      items: {
        type: Array
-     }
+     },
 
     /**
      * The total number of items to be paged by the server
@@ -68,7 +68,7 @@ export default {
         default () {
         return 0
       }
-    }
+    },
 
     /**
      * The total number of pages calculated by the server based on the given search criteria and the given page size
@@ -78,7 +78,7 @@ export default {
         default () {
           return 0
         }
-      }
+      },
 
     /**
      * A function which should call the remote service which must return paged data
