@@ -1,6 +1,6 @@
 <template>
   <div class="myPager">
-    <pager :on-search='getRemoteItems' :on-select='editUser' :col-names='colNames' :response='response' :no-items-label='noUsers' :filterPlaceholder="filterUsers" :selectId='selectedId'/>
+    <pager :on-search='getRemoteItems' :on-select='editUser' :col-names='colNames' :items='items' :total-pages="totalPages" :total-items="totalItems" :no-items-label='noUsers' :filter-placeholder="filterUsers" :select-id='selectedId'/>
   </div>
 </template>
 
@@ -14,7 +14,9 @@ export default {
   },
   data () {
     return {
-      response: null,
+      items: [],
+      totalPages: 0,
+      totalItems: 0,
       colNames: [
         {'label': 'User Name', 'value': 'username'},
         {'label': 'First Name', 'value': 'firstName'},
@@ -30,11 +32,13 @@ export default {
   methods: {
     getRemoteItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
-      this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer '}})
+      this.$http.get('https://simple-user-account-api.herokuapp.com/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg3MTY3NTU2LCJleHAiOjE0ODcxNjg0NTZ9.E3BVsp4me2d9FUJkfR3KFzAlV4oWk_ozSvQSCOxQoVtrBv-2S_r6xjKGPyTOwbJmgPpPvXu8HM9XQsvwILYKIw'}})
         .then(function successCallback (response) {
           console.log(response)
-          this.response = response
+          this.items = response.body.pagedItems
+          this.totalItems = response.body.totalItems
+          this.totalPages = response.body.totalPages
         }, function errorCallback (response) {
           console.log('Token expired, forcing client to re-authenitcate')
         })

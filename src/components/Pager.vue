@@ -54,19 +54,35 @@ export default {
     },
 
     /**
-     * The response object from the server which must contain the following
-     * - pagedItems : An Array of objects with attributes referenced in colNames
-     * - totalItems : The total number of items to be paged
-     * - totalPages : The total number of pages as defined by the total items and page size
+     * The page array of objects returned from the server from a request to search for and page on the given critera
      */
-    response: {
-      type: Object,
-      default: null
-    },
+     items: {
+       type: Array
+     }
+
+    /**
+     * The total number of items to be paged by the server
+     */
+      totalItems: {
+        type: Number,
+        default () {
+        return 0
+      }
+    }
+
+    /**
+     * The total number of pages calculated by the server based on the given search criteria and the given page size
+     */
+      totalPages: {
+        type: Number,
+        default () {
+          return 0
+        }
+      }
 
     /**
      * A function which should call the remote service which must return paged data
-     * and set the the response object
+     * and set the items, totalItems and totalPages properties
      */
     onSearch: {
       type: Function,
@@ -123,9 +139,6 @@ export default {
 
   data () {
     return {
-      items: [],
-      totalPages: 0,
-      totalItems: 0,
       pageSize: 10,
       currentPage: 1,
       nextPageNumber: 1,
@@ -152,10 +165,6 @@ export default {
      * watched response object
      */
     calculatePage: function (data) {
-      this.items = data.body.pagedItems
-      this.totalItems = data.body.totalItems
-      this.totalPages = data.body.totalPages
-
       if (this.currentPage < this.totalPages) {
         this.nextPageNumber = this.currentPage + 1
         this.hasNext = true
@@ -197,10 +206,10 @@ export default {
         margin-top: 20px;
         margin-bottom: 20px;
         padding: 20px;
-        background-color: rgba(170, 204, 170, 0.33);
+        background-color: #D3D3D3;
         border: 1px solid #ddd;
         border-radius: 4px;
-        box-shadow: 0 0 30px #3e4d3e;
+        box-shadow: 0 0 30px #A9A9A9;
         font-family:Arial, sans-serif;
         font-size:14px;
         color: #3e4d3e;
@@ -211,8 +220,8 @@ export default {
         margin-top: 20px;
         margin-bottom: 20px;
         padding: 20px;
-        background-color: rgba(170, 204, 170, 0.33);
-        box-shadow: 0 0 10px #86a186;
+        background-color: #D3D3D3;
+        box-shadow: 0 0 10px #708090;
     }
 
         .fixed-height {
@@ -254,7 +263,7 @@ export default {
         border-width:1px;
         overflow:hidden;
         word-break:normal;
-        border-color:#aca;
+        border-color:#D3D3D3;
         color:#333;
         background-color:#fff;
     }
@@ -268,12 +277,12 @@ export default {
         border-width:1px;
         overflow:hidden;
         word-break:normal;
-        border-color:#aaa;
+        border-color:#D3D3D3;
         color:#fff;
-        background-color:#aca;
+        background-color:#A9A9A9;
     }
         .highlighted {
-        color:#00b300;
+        color:#FFFAF0;
     }
 
 </style>
