@@ -56,16 +56,16 @@ export default {
     /**
      * The page array of objects returned from the server from a request to search for and page on the given critera
      */
-     items: {
-       type: Array
-     },
+    items: {
+      type: Array
+    },
 
     /**
      * The total number of items to be paged by the server
      */
-      totalItems: {
-        type: Number,
-        default () {
+    totalItems: {
+      type: Number,
+      default () {
         return 0
       }
     },
@@ -73,12 +73,12 @@ export default {
     /**
      * The total number of pages calculated by the server based on the given search criteria and the given page size
      */
-      totalPages: {
-        type: Number,
-        default () {
-          return 0
-        }
-      },
+    totalPages: {
+      type: Number,
+      default () {
+        return 0
+      }
+    },
 
     /**
      * A function which should call the remote service which must return paged data
@@ -188,10 +188,10 @@ export default {
   watch: {
 
      /**
-     * When the response property in the parent changes then
+     * When the items property in the parent changes then
      * recalculate the page
      */
-    response: function (val) {
+    items: function (val) {
       this.calculatePage(val)
     }
   }

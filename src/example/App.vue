@@ -32,8 +32,8 @@ export default {
   methods: {
     getRemoteItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
-      this.$http.get('https://simple-user-account-api.herokuapp.com/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg3MTY3NTU2LCJleHAiOjE0ODcxNjg0NTZ9.E3BVsp4me2d9FUJkfR3KFzAlV4oWk_ozSvQSCOxQoVtrBv-2S_r6xjKGPyTOwbJmgPpPvXu8HM9XQsvwILYKIw'}})
+      this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg3MjY1Mzc3LCJleHAiOjE0ODcyNjYyNzd9.pVL53d1YM3cdGXweMXaaq30lQZa_gSo7e4efIgHYByPkfAMtbzPtp1bXx6KGgpxnrTBB2K6pQuv1Q9xdcjFfRA'}})
         .then(function successCallback (response) {
           console.log(response)
           this.items = response.body.pagedItems
