@@ -45,14 +45,32 @@ header name.
  },
 ```
 
-**response** - The response object from the server which must contain the following
-       - pagedItems : An Array of objects with attributes referenced in colNames
-       - totalItems : The total number of items to be paged
-       - totalPages : The total number of pages as defined by the total items and page size
+**Items** - The page array of objects returned from the server from a
+request to search for and page on the given critera
 ```javascript
-response: {
-      type: Object,
-      default: null
+    items: {
+      type: Array
+    },
+```
+
+**totalItems** -  The total number of items to be paged by the server
+```javascript
+totalItems: {
+      type: Number,
+      default () {
+        return 0
+      }
+    },
+```
+
+**totalPages** - The total number of pages calculated by the server based on the given search
+criteria and the given page size
+```javascript
+totalPages: {
+      type: Number,
+      default () {
+        return 0
+      }
     },
 ```
 
@@ -115,7 +133,7 @@ into the onSelect function as a parameter
 
 **Html**
 ```html
-<pager :on-search='getRemoteItems' :on-select='editUser' :col-names='colNames' :response='response' :no-items-label='noUsers' :filterPlaceholder="filterUsers" :selectId='selectedId'/>
+<pager :on-search='getRemoteItems' :on-select='editUser' :col-names='colNames' :items='items' :total-pages="totalPages" :total-items="totalItems" :no-items-label='noUsers' :filter-placeholder="filterUsers" :select-id='selectedId'/>
 ```
 
 **Javascript**
@@ -127,36 +145,40 @@ export default {
   },
 
   data () {
-    return {
-      response: null,
-      colNames: [
-        {'label': 'User Name', 'value': 'username'},
-        {'label': 'First Name', 'value': 'firstName'},
-        {'label': 'Last Name', 'value': 'lastName'},
-        {'label': 'Email', 'value': 'email'},
-        {'label': 'Enabled?', 'value': 'enabled'}
-      ],
-      noUsers: 'No Users',
-      filterUsers: 'Filter Users',
-      selectedId: 'id'
-    }
-  },
-
-  methods: {
-    getRemoteItems: function (pageSize, pageNumber, filter) {
-      console.log(pageSize + ' ' + pageNumber)
-      this.$http.get('http://myuserservice.com/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter)
-        .then(function successCallback (response) {
-          this.response = response
-        }, function errorCallback (response) {
-          console.log('error')
-        })
+      return {
+        items: [],
+        totalPages: 0,
+        totalItems: 0,
+        colNames: [
+          {'label': 'User Name', 'value': 'username'},
+          {'label': 'First Name', 'value': 'firstName'},
+          {'label': 'Last Name', 'value': 'lastName'},
+          {'label': 'Email', 'value': 'email'},
+          {'label': 'Enabled?', 'value': 'enabled'}
+        ],
+        noUsers: 'No Users',
+        filterUsers: 'Filter Users',
+        selectedId: 'id'
+      }
     },
 
-    editUser: function (id) {
-      console.log('you clicked user ' + id)
+    methods: {
+      getRemoteItems: function (pageSize, pageNumber, filter) {
+
+        this.$http.get('https://simple-user-account-api.herokuapp.com/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
+          .then(function successCallback (response) {
+            this.items = response.body.pagedItems
+            this.totalItems = response.body.totalItems
+            this.totalPages = response.body.totalPages
+
+          }, function errorCallback (response) {
+            console.log(response)
+          })
+      },
+      editUser: function (id) {
+        console.log('you clicked user ' + id)
+      }
     }
-  }
 }
 ```
 
