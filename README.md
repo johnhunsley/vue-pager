@@ -74,8 +74,8 @@ totalPages: {
     },
 ```
 
-**onSearch** - A function which calls the remote service and sets the response. The function
-should accept the pageSize and pageNumber as parameters
+**onSearch** - A function which should call the remote service and sets the items, totalItems and totalPages values from
+response. The function should accept the pageSize and pageNumber as parameters
 ```javascript
 onSearch: {
       type: Function,

@@ -14,7 +14,7 @@ export default {
   },
   data () {
     return {
-      items: [],
+      items: [0],
       totalPages: 0,
       totalItems: 0,
       colNames: [
@@ -32,8 +32,8 @@ export default {
   methods: {
     getRemoteItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
-      this.$http.get('http://localhost:8080/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg3MjY1Mzc3LCJleHAiOjE0ODcyNjYyNzd9.pVL53d1YM3cdGXweMXaaq30lQZa_gSo7e4efIgHYByPkfAMtbzPtp1bXx6KGgpxnrTBB2K6pQuv1Q9xdcjFfRA'}})
+      this.$http.get('https://simple-user-account-api.herokuapp.com/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
+        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg3MzQzMDMyLCJleHAiOjE0ODczNDM5MzJ9.ssKVb71iQwrMLo0kceaHvWaSkyzSGHbqKBQvZWgSJSNqWseSWPtgvNGthg8OD3wkws76g6pKpIMRF1Aau6QdZA'}})
         .then(function successCallback (response) {
           console.log(response)
           this.items = response.body.pagedItems
