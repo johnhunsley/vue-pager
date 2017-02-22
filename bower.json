@@ -1,0 +1,32 @@
+{
+  "name": "vue-pager",
+  "description": "Server Side Paging Vue Component",
+  "main": "dist/vue-pager.js",
+  "authors": [
+    "John Hunsley <jphunsley@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnhunsley/vue-pager"
+  },
+  "license": "MIT",
+  "keywords": [
+    "vue.js",
+    "vue-pager",
+    "paging",
+    "filter"
+  ],
+  "moduleType": [
+    "amd",
+    "node",
+    "es6"
+  ],
+  "homepage": "http://johnhunsley.github.io/vue-pager/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
