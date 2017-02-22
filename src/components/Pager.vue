@@ -86,7 +86,7 @@ export default {
      */
     onSearch: {
       type: Function,
-      default (pageSize, pageNumber) {
+      default (pageSize, pageNumber, filter) {
       }
     },
 
