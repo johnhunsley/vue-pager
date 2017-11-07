@@ -134,7 +134,16 @@ export default {
     selectId: {
       type: String,
       default: ''
+    },
+
+    /**
+     * The filter query value
+     */
+    filter: {
+      type: String,
+      default: ''
     }
+
   },
 
   data () {
@@ -145,7 +154,7 @@ export default {
       hasNext: true,
       previousPageNumber: 1,
       hasPrevious: false,
-      filter: ''
+      filter: this.filter
     }
   },
 
