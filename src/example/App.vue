@@ -1,6 +1,6 @@
 <template>
   <div class="myPager">
-    <pager :on-search='getRemoteItems' :on-select='editUser' :col-names='colNames' :items='items' :total-pages="totalPages" :total-items="totalItems" :no-items-label='noUsers' :filter-placeholder="filterUsers" :select-id='selectedId'/>
+    <pager :on-search='getRemoteItems' :on-select='editUser' :col-names='colNames' :items='items' :pageNumberModulus="6" :total-pages="totalPages" :total-items="totalItems" :no-items-label='noUsers' :filter-placeholder="filterUsers" :select-id='selectedId'/>
   </div>
 </template>
 
