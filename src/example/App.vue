@@ -32,16 +32,20 @@ export default {
   methods: {
     getRemoteItems: function (pageSize, pageNumber, filter) {
       console.log(pageSize + ' ' + pageNumber)
-      this.$http.get('https://simple-user-account-api.herokuapp.com/user/search/' + pageSize + '/' + pageNumber + '?query=' + filter,
-        {headers: {'Cache-Control': 'no-cache', 'X-Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huaHVuc2xleSIsInNjb3BlcyI6WyJBRE1JTiIsIkFQUF9VU0VSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDg3MzQzMDMyLCJleHAiOjE0ODczNDM5MzJ9.ssKVb71iQwrMLo0kceaHvWaSkyzSGHbqKBQvZWgSJSNqWseSWPtgvNGthg8OD3wkws76g6pKpIMRF1Aau6QdZA'}})
-        .then(function successCallback (response) {
-          console.log(response)
-          this.items = response.body.pagedItems
-          this.totalItems = response.body.totalItems
-          this.totalPages = response.body.totalPages
-        }, function errorCallback (response) {
-          console.log('Token expired, forcing client to re-authenitcate')
-        })
+      this.items = [
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'},
+        {'username': 'bob100', 'firstName': 'Bob', 'lastName': 'Smith', 'email': 'bob@bob.com', 'enabled': 'Yes'}
+      ]
+      this.totalItems = 150
+      this.totalPages = 15
     },
     editUser: function (id) {
       console.log('you clicked user ' + id)

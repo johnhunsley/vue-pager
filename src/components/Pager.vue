@@ -17,11 +17,11 @@
         <div class="pager-section">
             <button id="prev" v-bind:disabled="!hasPrevious" value="Prev" @click="search(pageSize, previousPageNumber)">Prev</button>
                     <span v-for="n in totalPages">
-                        &nbsp;&nbsp;
-                        <span @click="search(pageSize, n)">
-                            <b v-if="n == currentPage" class="highlighted">{{n}}</b>
-                            <b v-else>{{n}}</b>
-                        </span>
+                          <span v-if="currentPage - n <= 4 && n - currentPage <= 4" @click="search(pageSize, n)">
+                              &nbsp;&nbsp;
+                              <b v-if="n == currentPage" class="highlighted">{{n}}</b>
+                              <b v-else>{{n}}</b>
+                          </span>
                     </span>
             <button id="next" v-bind:disabled="!hasNext" value="Next" @click="search(pageSize, nextPageNumber)">Next</button>
             <span>
@@ -291,7 +291,7 @@ export default {
         background-color:#A9A9A9;
     }
         .highlighted {
-        color:#FFFAF0;
+        color:#bab9b8;
     }
 
 </style>
