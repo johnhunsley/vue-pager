@@ -33,6 +33,7 @@
             </span>
           <slot name="additionalButtons"></slot>
         </div>
+    </div>
 </template>
 
 <script>
