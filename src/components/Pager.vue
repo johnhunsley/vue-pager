@@ -1,21 +1,23 @@
 <template>
-    <div id="pager" class="pager-container">
-        <div class="pager-section">
-            <input id="filterItems" class="pager-filter" type="text" @keyup="search(pageSize, 1)" :placeholder="filterPlaceholder" v-model.trim="filter"/>
+    <div id="pager">
+        <div class="input-group mb-3">
+            <input class="form-control" id="filterItems" type="text" @keyup="search(pageSize, 1)" :placeholder="filterPlaceholder" v-model.trim="filter"/>
         </div>
-        <div class="pager-section fixed-height">
+        <div>
             <span v-if="items.length < 1">{{noItemsLabel}}</span>
-            <table v-else>
+            <table class="table table-condensed table-striped" v-else>
                 <th v-for="colName in colNames">
                     {{colName.label}}
                 </th>
-                <tr v-for="item in items" @click="onSelect(item[selectId])">
-                    <td v-for="colName in colNames">{{item[colName.value]}}</td>
-                </tr>
+                <tbody>
+                  <tr v-for="item in items" @click="onSelect(item[selectId])">
+                      <td v-for="colName in colNames">{{item[colName.value]}}</td>
+                  </tr>
+                </tbody>
             </table>
         </div>
-        <div class="pager-section">
-            <button id="prev" v-bind:disabled="!hasPrevious" value="Prev" @click="search(pageSize, previousPageNumber)">Prev</button>
+        <div>
+            <button class="btn btn-light" id="prev" v-bind:disabled="!hasPrevious" value="Prev" @click="search(pageSize, previousPageNumber)">Prev</button>
                     <span v-for="n in totalPages">
                           <span v-if="currentPage - n <= pageNumberModulus && n - currentPage <= pageNumberModulus" @click="search(pageSize, n)">
                               &nbsp;&nbsp;
@@ -23,10 +25,10 @@
                               <b v-else>{{n}}</b>
                           </span>
                     </span>
-            <button id="next" v-bind:disabled="!hasNext" value="Next" @click="search(pageSize, nextPageNumber)">Next</button>
+            <button class="btn btn-light" id="next" v-bind:disabled="!hasNext" value="Next" @click="search(pageSize, nextPageNumber)">Next</button>
             <span>
                 &nbsp;&nbsp;
-                <label class="left" for="pageSize">Items Per Page -&nbsp;&nbsp;</label>
+                <label for="pageSize">Items Per Page -&nbsp;</label>
                 <select id="pageSize" v-model="pageSize" @change="search(pageSize, 1)">
                     <option v-for="option in pageSizeOptions">{{option}}</option>
                 </select>
@@ -218,90 +220,6 @@ export default {
 </script>
 
 <style>
-    <style>
-        .pager-container {
-        width:80%;
-        margin-left: 20px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 20px;
-        background-color: #D3D3D3;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-shadow: 0 0 30px #A9A9A9;
-        font-family:Arial, sans-serif;
-        font-size:14px;
-        color: #3e4d3e;
-    }
-
-        .pager-section {
-        margin-left: auto;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 20px;
-        background-color: #D3D3D3;
-        box-shadow: 0 0 10px #708090;
-    }
-
-        .fixed-height {
-        min-height: 420px;
-    }
-
-        .pager-filter {
-        min-width: 100%;
-    }
-
-        table {
-        margin-right: auto;
-        table-layout: auto;
-        min-width: 100%;
-        float: none;
-        border-collapse:collapse;
-        border-spacing:0;
-        border-color:#aaa;
-    }
-
-        tr:nth-child(even) {
-        background-color:#FCFBE3;
-        vertical-align:top
-    }
-
-        tr:nth-child(odd) {
-        vertical-align:top
-    }
-
-        tr:hover {
-        background-color: aqua;
-    }
-
-        td {
-        font-family:Arial, sans-serif;
-        font-size:14px;
-        padding:10px 5px;
-        border-style:solid;
-        border-width:1px;
-        overflow:hidden;
-        word-break:normal;
-        border-color:#D3D3D3;
-        color:#333;
-        background-color:#fff;
-    }
-
-        th {
-        font-family:Arial, sans-serif;
-        font-size:14px;
-        font-weight:normal;
-        padding:10px 5px;
-        border-style:solid;
-        border-width:1px;
-        overflow:hidden;
-        word-break:normal;
-        border-color:#D3D3D3;
-        color:#fff;
-        background-color:#A9A9A9;
-    }
-        .highlighted {
-        color:#bab9b8;
-    }
+@import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 </style>
